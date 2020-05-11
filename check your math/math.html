@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>MATH</title>
+</head>
+<body style="background:  rgb(20, 30, 40);">
+	<div id="app" style="text-align:center; height: 0px;">
+		<br>
+		
+		<div style="border: solid; height: 290px; width: 200px; margin: auto; border-color: rgb(200, 200, 200);">
+			<p id="problem">QUESTION</p>
+			<input id="res">
+			<hr>
+			<button class="numbers" onclick="concatenateNumber(7)">7</button>
+			<button class="numbers" onclick="concatenateNumber(8)">8</button>
+			<button class="numbers" onclick="concatenateNumber(9)">9</button>
+			<br>
+			<button class="numbers" onclick="concatenateNumber(4)">4</button>
+			<button class="numbers" onclick="concatenateNumber(5)">5</button>
+			<button class="numbers" onclick="concatenateNumber(6)">6</button>
+			<br>
+			<button class="numbers" onclick="concatenateNumber(1)">1</button>
+			<button class="numbers" onclick="concatenateNumber(2)">2</button>
+			<button class="numbers" onclick="concatenateNumber(3)">3</button>
+			<br>
+			<button class="numbers" onclick="concatenateNumber('clear')" style="background: red;">C</button>
+			<button class="numbers" onclick="concatenateNumber(0)">0</button>
+			<button class="numbers" onclick="concatenateNumber('\b')" style="background: red;">⌫</button>
+		</div>
+		
+		<div style="height: 290px; width: 70px; margin: auto; position: relative; top :-290px; left: -250px">
+			<br><br>
+			<button class="op" onclick="operation(0)">+</button>
+			<br><br>
+			<button class="op" onclick="operation(1)">-</button>
+			<br><br>
+			<button class="op" onclick="operation(2)">×</button>
+			<br><br>
+			<button class="op" onclick="operation(3)">÷</button>
+			<br>
+		</div>	
+		
+		<div style="height: 290px; width: 200px; margin: auto; position: relative; top :-600px; right: -220px">
+			<img src="questions/2.png" style="width: 50px; height: 50px; position: relative; top: 0px;">
+			<img src="right_wrong.png" style="width: 150px; height: 54px; position: relative; top: -50px;">
+	<!-- 		<br>
+			<p id="questions" style="position: relative; top: -70px; font-size: 24px; display: inline-block;">--</p>
+			<p id="questions" style="position: relative; top: -70px; font-size: 24px; display: inline-block;">--</p>
+			<p id="questions" style="position: relative; top: -70px; font-size: 24px; display: inline-block;">--</p>
+			<br> -->
+			<p id="questions" style="position: relative; top: -70px; font-size: 24px;">--</p>
+
+			<button id="calc" onclick="calc()" style="width: 160px; height: 40px; background: green; color: rgb(200, 200, 200); top: -70px;">CALCULATE</button>
+			<button onclick="generateProblem()" style="width: 160px; height: 40px; background: purple; top: 35px; color: rgb(200, 200, 200);"> NEW</button>
+		</div>
+
+		
+		<div style="height: 0px; width: 600px; margin: auto; position: relative; top :-550px;">
+			<hr>
+			<button style="right: 150px; background: yellow" onclick="level(0)">EASY</button>
+			<button style="right: 75px; background: green" onclick="level(1)">MEDIUM</button>
+			<button style="right: 0px; background: red" onclick="level(2)">HARD</button><hr>
+			<div style="width: 70px; height: 60px; border: solid; border-radius: 50px; border-color: rgb(0, 170, 255); margin: auto; position: relative; left: 265px; top: -86px;">	
+				<p style="text-align: center;">YSSH</p>
+			</div>
+		</div>
+	</div>
+	<img id="photo" src="right/1.gif" style="display: none;">
+</body>
+
+<style type="text/css">
+	p{
+		color: white;
+		font-style: italic;
+		font-weight: bold;
+		font-size: 20px;
+		text-align: center;
+	}
+	button{
+		width: 100px;
+		height: 70px;
+		border-radius: 60px;
+		border-width: 4px;
+		border-color:rgb(200, 200, 150);
+		margin: auto;
+		position: relative;
+		/*top: -65px;*/
+		font-weight: bold;
+		font-size: 20px;
+	}
+	button.op{
+		top:0px;
+		left:0px;
+		width: 45px;
+		height: 45px;
+		border-radius: 4px;
+		background: brown;
+	}
+	button.numbers{
+		top: 0px;
+		left:0px;
+		width: 45px;
+		height: 45px;
+		border-radius: 4px;
+		background:gold;
+	}
+</style>
+<!-- <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script> -->
+
+<script type="text/javascript">
+	var op = " + ";
+	var num1, num2, range, result;
+	var Q_NO = 0, Q_R = 0, Q_W = 0;
+	var flag_Q = 0, flag_W = 0;
+	var i_R = 0, i_W = 0, i_S = 0, i_R_W = 0;
+	function operation(argument) {
+		// body...
+		switch(argument){
+			case 0:
+			op = " + ";
+			break;
+			case 1:
+			op = " - ";
+			break;
+			case 2:
+			op = " × ";
+			break;
+			case 3:
+			op = " ÷ ";
+			break;
+		}
+	}
+
+	function level(argument) {
+		// body...
+		switch(argument){
+			case 0:
+			range = 10;
+			break;
+			case 1:
+			range = 20;
+			break;
+			case 2:
+			range = 50;
+			break;
+		}
+	}
+
+	function generateProblem() {
+		// body...
+		Q_NO++;
+		flag_Q = 1;
+		var tmp;
+		num1 = Math.floor(range * Math.random());
+		num2 = Math.floor(range * Math.random());
+		if ((num1 < num2) & (op == " - ")){
+			tmp = num1;
+			num1 = num2;
+			num2 = tmp;
+		}
+		else if (op == " ÷ "){
+			if(num1 < 2)
+				num1 = 2;
+			if(num2 < 2)
+				num2 = 2;
+			if(num1 < num2){
+				tmp = num1;
+				num1 = num2;
+				num2 = tmp;
+			}
+			if (num1%num2 != 0){
+				num1 = (Math.floor(num1/num2) + 1) * num2;
+			}
+		}
+		document.getElementById("problem").innerHTML = num1.toString() + op + num2.toString() + " = ";
+		document.getElementById("res").value = "";
+		switch(op){
+			case " + ":
+			result = num1 + num2;
+			break;
+			case " - ":
+			result = num1 - num2;
+			break;
+			case " × ":
+			result = num1 * num2;
+			break;
+			case " ÷ ":
+			result = num1 / num2;
+			break;
+		}
+	}
+	function calc() {
+		// body...
+		var value = document.getElementById("res").value;
+		if(value == result){
+			if(flag_Q){
+				Q_R++;	flag_Q = 0;
+			}
+			if(flag_W)
+				document.getElementById("photo").src = "right after wrong/"+ ++i_R_W +".gif";
+			else
+				document.getElementById("photo").src = "right/"+ ++i_R +".gif";
+			if(Q_R%5 == 0 & ~flag_W & Q_R!=0){
+				i_R--;
+				document.getElementById("photo").src = "stage/"+ ++i_S +".gif";
+			}
+			flag_W = 0;
+			_window_(0);
+			setTimeout(() => {  _window_(1)}, 3000);			
+		}
+		else{
+			flag_W = 1;
+			document.getElementById("photo").src = "wrong/"+ ++i_W +".gif";
+			_window_(0);
+			setTimeout(() => {  _window_(1)}, 1000);
+			if(flag_Q){
+				Q_W++;	flag_Q = 0;
+			}
+		}
+		// console.log(Q_NO, Q_R, Q_W);
+		reset();
+	}
+
+	var input = document.getElementById("res");
+	input.addEventListener("keyup", function(event) {
+	  if (event.keyCode === 13) {
+	   event.preventDefault();
+	   document.getElementById("calc").click();
+	  }
+	});
+	function concatenateNumber(argument) {
+		// body...
+		if(argument == 'clear')
+			document.getElementById("res").value = "";
+		else if(argument == '\b')
+			{
+				var tmp = document.getElementById("res").value.split("");
+				tmp.pop();
+				document.getElementById("res").value = tmp.join("");
+			}
+		else
+			document.getElementById("res").value += argument;
+	}
+	function _window_(argument) {
+		// body...
+		switch(argument){
+			case 0:
+				document.getElementById("photo").style = "margin: auto; display: block; width: 40%;";
+				document.getElementById("app").style = "display: none";
+			break;
+			case 1:
+				document.getElementById("photo").style = "display: none";
+				document.getElementById("app").style = " text-align:center; height: 0px;display: intial;";
+			break;
+		}
+	}
+	function reset() {
+		// body...
+		if(i_R_W == 5)
+			i_R_W =0;
+		if(i_W == 7)
+			i_W = 0;
+		if(i_R == 14)
+			i_R = 0;
+		if(i_S == 2)
+			i_S = 0;
+	}
+	setInterval(updateMessages, 100);
+	function updateMessages() {
+		// body...
+		document.getElementById("questions").innerHTML = Q_R + " -- " + Q_NO + " -- " + Q_W;
+	}
+	// document.getElementById("questions").innerHTML = Q_R + " -- " + Q_NO + " -- " + Q_W;
+	// $('#questions').html(Q_R + " -- " + Q_NO + " -- " + Q_W)
+	// document.getElementById("questions").innerHTML = "-------     -----";
+
+</script>
+</html>
